@@ -1,0 +1,98 @@
+/* ==================== GLOBAL STYLES ==================== */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #FFA500;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+#content {
+  margin-top: 60px; /* leave space for sidebar icons */
+  padding: 20px;
+  max-width: 900px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.button {
+  background-color: #FFA500;
+  color: #000;
+  border: none;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+}
+
+.button:hover {
+  background-color: #ff7b00;
+}
+
+/* ==================== FLOATING SIDEBAR ==================== */
+#sidebar {
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.sidebar-icon {
+  background-color: #111;
+  color: #FFA500;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
+.sidebar-icon:hover {
+  background-color: #222;
+  transform: scale(1.1);
+}
+
+/* ==================== MOBILE RESPONSIVENESS ==================== */
+@media (max-width: 768px) {
+  #sidebar {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+  }
+  .sidebar-icon {
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+  }
+}
