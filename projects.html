@@ -5,16 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects — Official Portal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Main Content Styling */
+    #main-content {
+      padding: 40px;
+      max-width: 900px;
+      margin-left: 80px; /* space for sidebar */
+      color: #FFA500;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 30px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .button {
+      background-color: #FFA500;
+      color: #000000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #ff7b00;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
+
     <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
+
     <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
@@ -41,7 +85,7 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Handle sidebar icon clicks
+    // Sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
