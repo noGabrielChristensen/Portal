@@ -11,6 +11,7 @@
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
     <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
+    <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
@@ -19,14 +20,18 @@
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1>Updates</h1>
-    <p>Stay tuned for the latest news, features, and project updates. This page will evolve as the portal grows.</p>
+    <h1>Portal Updates</h1>
+    <p>Check this section to see the latest updates, new features, and improvements to the portal. We'll keep it current as development progresses.</p>
 
-    <ul>
-      <li>Update 1 — New Grove-inspired visualization integrated.</li>
-      <li>Update 2 — Sidebar placeholders now interactive.</li>
-      <li>Update 3 — Admin tools prepared for next release.</li>
-    </ul>
+    <!-- Updates List -->
+    <div class="notes-section">
+      <ul>
+        <li>Update 1 — Added sidebar feature with future expansion placeholders.</li>
+        <li>Update 2 — Improved mobile responsiveness for all pages.</li>
+        <li>Update 3 — Updated visual style and hover effects on buttons.</li>
+        <li>Update 4 — Planned future projects will be listed here.</li>
+      </ul>
+    </div>
 
     <a href="index.html" class="button">Back to Home</a>
   </div>
@@ -40,7 +45,6 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Handle sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
