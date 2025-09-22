@@ -3,38 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notes & Guidance — Official Portal</title>
+  <title>Notes — Official Portal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Main Content Styling */
+    #main-content {
+      padding: 40px;
+      max-width: 900px;
+      margin-left: 80px; /* space for sidebar */
+      color: #FFA500;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      max-width: 800px;
+      height: 300px;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background-color: #111;
+      color: #FFA500;
+      resize: vertical;
+    }
+
+    .button {
+      background-color: #FFA500;
+      color: #000000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #ff7b00;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
+
     <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
+
     <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1>Notes & Guidance</h1>
-    <p>Welcome! This page contains guidance, progress updates, and tips for your website and projects. Content here will evolve as features are implemented and improvements are made.</p>
+    <h1>Notes</h1>
+    <p>Keep your notes here. This area is meant for jotting down ideas, reminders, or ongoing projects. Expand and collapse the sidebar to access portal navigation without leaving your writing flow.</p>
 
-    <h2>Website Domain</h2>
-    <p>Your official website domain is fully customizable. Domains must be purchased, typically costing $10–$15 per year. Administration manages all domain settings.</p>
+    <textarea placeholder="Write your notes here..."></textarea>
 
-    <h2>Testing & Updates</h2>
-    <p>All updates and new features are first tested on a cloned version of the site to ensure stability before deployment to the live environment. This prevents disruptions and ensures reliability.</p>
-
-    <h2>Music & Features</h2>
-    <p>The music player allows uploading tracks and managing a local queue. Future updates will enable cloud saving and cross-device access.</p>
-
-    <h2>What’s in Progress</h2>
-    <p>The donation button is ready to link with your CashApp account. A secure admin message box for feature requests will be implemented soon.</p>
-
+    <br>
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
@@ -47,6 +92,7 @@
       sidebar.classList.toggle('collapsed');
     });
 
+    // Sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
