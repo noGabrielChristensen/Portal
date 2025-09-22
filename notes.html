@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes & Guidance — Official Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div id="sidebar" class="collapsed">
+    <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
+    <!-- Future Feature Placeholders -->
+    <div class="feature-placeholder" title="Feature 1">⚡</div>
+    <div class="feature-placeholder" title="Feature 2">💎</div>
+    <div class="feature-placeholder" title="Feature 3">🔥</div>
+    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1>Notes & Guidance</h1>
+    <p>Welcome! This page contains guidance, progress updates, and tips for your website and projects. Content here will evolve as features are implemented and improvements are made.</p>
+
+    <h2>Website Domain</h2>
+    <p>Your official website domain is fully customizable. Domains must be purchased, typically costing $10–$15 per year. Administration manages all domain settings.</p>
+
+    <h2>Testing & Updates</h2>
+    <p>All updates and new features are first tested on a cloned version of the site to ensure stability before deployment to the live environment. This prevents disruptions and ensures reliability.</p>
+
+    <h2>Music & Features</h2>
+    <p>The music player allows uploading tracks and managing a local queue. Future updates will enable cloud saving and cross-device access.</p>
+
+    <h2>What’s in Progress</h2>
+    <p>The donation button is ready to link with your CashApp account. A secure admin message box for feature requests will be implemented soon.</p>
+
+    <a href="index.html" class="button">Back to Home</a>
+  </div>
+
+  <!-- Sidebar Script -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const link = icon.dataset.link;
+        if(link.startsWith('http')) {
+          window.open(link, '_blank');
+        } else {
+          window.location.href = link;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
