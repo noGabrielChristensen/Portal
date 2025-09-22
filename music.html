@@ -3,77 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music & Media — Official Portal</title>
+  <title>Music — Official Portal</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Main Content Styling */
-    #main-content {
-      padding: 40px;
-      max-width: 900px;
-      margin-left: 80px; /* space for sidebar */
-      color: #FFA500;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .button {
-      background-color: #FFA500;
-      color: #000000;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin: 10px 5px 0 0;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-
-    .button:hover {
-      background-color: #ff7b00;
-      transform: scale(1.05);
-    }
-
-    #player-section {
+    #player {
       margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #333;
-      border-radius: 12px;
-      background-color: #111;
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
     }
-
     audio {
       width: 100%;
       margin-top: 10px;
-      outline: none;
+      margin-bottom: 20px;
     }
-
-    input[type="file"] {
+    #playlist {
+      text-align: left;
       margin-top: 10px;
     }
-
-    #playlist {
-      margin-top: 20px;
-    }
-
     #playlist div {
-      margin-bottom: 8px;
       cursor: pointer;
-      padding: 5px 8px;
-      border-radius: 6px;
+      padding: 5px;
+      border-bottom: 1px solid #222;
       transition: background 0.2s;
     }
-
     #playlist div:hover {
       background-color: #222;
       color: #ff7b00;
@@ -84,28 +37,25 @@
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
-
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
     <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
-
     <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1>Music & Media</h1>
-    <p>Upload your audio tracks to test in the portal or explore existing media content below.</p>
+    <h1>Music Portal</h1>
+    <p>Listen to uploaded tracks and manage your music playlist below. Upload new audio files to play immediately.</p>
 
-    <div id="player-section">
-      <input type="file" id="fileInput" accept="audio/*" multiple>
+    <div id="player">
       <audio id="audio" controls></audio>
+      <input type="file" id="fileInput" accept="audio/*" multiple>
       <div id="playlist"></div>
     </div>
 
-    <br>
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
@@ -118,7 +68,6 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
@@ -130,29 +79,27 @@
       });
     });
 
-    // Audio player functionality
-    const fileInput = document.getElementById('fileInput');
-    const audio = document.getElementById('audio');
-    const playlist = document.getElementById('playlist');
+    // Music Player Script
+    const audio = document.getElementById("audio");
+    const fileInput = document.getElementById("fileInput");
+    const playlist = document.getElementById("playlist");
 
-    fileInput.addEventListener('change', () => {
-      playlist.innerHTML = '';
+    fileInput.addEventListener("change", () => {
+      playlist.innerHTML = "";
       Array.from(fileInput.files).forEach((file, index) => {
-        const item = document.createElement('div');
+        const item = document.createElement("div");
         item.textContent = file.name;
-        item.onclick = () => {
-          audio.src = URL.createObjectURL(file);
-          audio.play();
-        };
+        item.onclick = () => loadTrack(file);
         playlist.appendChild(item);
-
-        // Automatically play first track
-        if(index === 0) {
-          audio.src = URL.createObjectURL(file);
-          audio.play();
-        }
+        if(index === 0) loadTrack(file);
       });
     });
+
+    function loadTrack(file) {
+      const url = URL.createObjectURL(file);
+      audio.src = url;
+      audio.play();
+    }
   </script>
 </body>
 </html>
