@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Updates — Official Portal</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #updates-feed {
+      max-width: 700px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    .update-item {
+      background-color: #111;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      transition: background-color 0.3s;
+    }
+    .update-item:hover {
+      background-color: #222;
+    }
+    .update-date {
+      font-size: 0.9rem;
+      color: #FFA500;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
   <!-- Sidebar -->
@@ -20,15 +42,23 @@
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1>Portal Updates</h1>
-    <p>Stay up to date with all recent changes, additions, and improvements to the official portal.</p>
+    <h1>Updates</h1>
+    <p>Check out the latest changes, features, and announcements in the portal.</p>
 
-    <ul>
-      <li><strong>[2025-09-22]</strong> Added floating sidebar with quick access to home and Twitch.</li>
-      <li><strong>[2025-09-22]</strong> Music portal updated with playlist and multi-file upload support.</li>
-      <li><strong>[2025-09-21]</strong> Projects page redesigned for better layout and visual clarity.</li>
-      <li><strong>[2025-09-20]</strong> Style improvements across all portal pages for consistency.</li>
-    </ul>
+    <div id="updates-feed">
+      <div class="update-item">
+        <div class="update-date">September 22, 2025</div>
+        <div class="update-text">Added music visualizer with bass and hi-hat sparkles.</div>
+      </div>
+      <div class="update-item">
+        <div class="update-date">September 20, 2025</div>
+        <div class="update-text">Implemented collapsible sidebar for faster navigation.</div>
+      </div>
+      <div class="update-item">
+        <div class="update-date">September 18, 2025</div>
+        <div class="update-text">Launched official portal homepage with Twitch and portal buttons.</div>
+      </div>
+    </div>
 
     <a href="index.html" class="button">Back to Home</a>
   </div>
@@ -42,14 +72,12 @@
       sidebar.classList.toggle('collapsed');
     });
 
+    // Handle sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
-        if(link.startsWith('http')) {
-          window.open(link, '_blank');
-        } else {
-          window.location.href = link;
-        }
+        if(link.startsWith('http')) window.open(link, '_blank');
+        else window.location.href = link;
       });
     });
   </script>
