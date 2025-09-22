@@ -5,81 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notes — Official Portal</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Main Content Styling */
-    #main-content {
-      padding: 40px;
-      max-width: 900px;
-      margin-left: 80px; /* space for sidebar */
-      color: #FFA500;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    textarea {
-      width: 100%;
-      max-width: 800px;
-      height: 300px;
-      padding: 15px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background-color: #111;
-      color: #FFA500;
-      resize: vertical;
-    }
-
-    .button {
-      background-color: #FFA500;
-      color: #000000;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-
-    .button:hover {
-      background-color: #ff7b00;
-      transform: scale(1.05);
-    }
-  </style>
 </head>
 <body>
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
-
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
     <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
-
     <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
     <h1>Notes</h1>
-    <p>Keep your notes here. This area is meant for jotting down ideas, reminders, or ongoing projects. Expand and collapse the sidebar to access portal navigation without leaving your writing flow.</p>
+    <p>Here you can see updates, thoughts, and quick entries. This section is designed for ongoing tracking of creative ideas, projects, and inspirations.</p>
 
-    <textarea placeholder="Write your notes here..."></textarea>
+    <div class="notes-section">
+      <ul>
+        <li>Note 1 — Initial portal layout concept</li>
+        <li>Note 2 — Sidebar collapse/expand testing</li>
+        <li>Note 3 — Groove-inspired visualization ideas</li>
+        <!-- Add more notes as needed -->
+      </ul>
+    </div>
 
-    <br>
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
@@ -92,7 +44,7 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Sidebar icon clicks
+    // Handle sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
