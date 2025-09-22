@@ -7,29 +7,56 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Floating Sidebar -->
-  <div id="sidebar">
-    <div class="sidebar-icon" data-target="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-target="pages/twitch.html" title="Twitch">🎮</div>
-    <div class="sidebar-icon" data-target="pages/projects.html" title="Projects">📁</div>
-    <div class="sidebar-icon" data-target="pages/customizations.html" title="Customize">⚙️</div>
+  <!-- Sidebar -->
+  <div id="sidebar" class="collapsed">
+    <!-- Main Portal Icon -->
+    <div class="sidebar-icon" data-link="index.html" title="Enter Portal">
+      🌀
+    </div>
+    <!-- Twitch Icon -->
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">
+      🎮
+    </div>
+    <!-- Future Feature Placeholders -->
+    <div class="feature-placeholder" title="Future Feature 1">⚡</div>
+    <div class="feature-placeholder" title="Future Feature 2">💎</div>
+    <div class="feature-placeholder" title="Future Feature 3">🔥</div>
+    <!-- Collapse/Expand Control -->
+    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">
+      ⇆
+    </div>
   </div>
 
   <!-- Main Content -->
-  <div id="content">
+  <div id="main-content">
     <h1>Official Portal Website for _noGabrielChristensen</h1>
     <p>Come back often to see what's new!</p>
-
-    <!-- Main Portal Button -->
-    <a href="#" class="button">Enter Portal</a>
-
-    <!-- Twitch Button -->
+    <a href="index.html" class="button">Enter Portal</a>
     <a href="https://www.twitch.tv/xBleedvow?sr=a" target="_blank" class="button">
       🎮 I'm Live on Twitch — Come Hang Out!
     </a>
   </div>
 
-  <script src="js/main.js"></script>
+  <!-- Sidebar Script -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Handle clicks for sidebar icons with data-link
+    document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const link = icon.dataset.link;
+        if(link.startsWith('http')) {
+          window.open(link, '_blank');
+        } else {
+          window.location.href = link;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
