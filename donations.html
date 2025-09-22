@@ -5,81 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Donations — Official Portal</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Main Content Styling */
-    #main-content {
-      padding: 40px;
-      max-width: 900px;
-      margin-left: 80px; /* space for sidebar */
-      color: #FFA500;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .button {
-      background-color: #FFA500;
-      color: #000000;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin: 10px 5px 0 0;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-
-    .button:hover {
-      background-color: #ff7b00;
-      transform: scale(1.05);
-    }
-
-    #donation-section {
-      margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #333;
-      border-radius: 12px;
-      background-color: #111;
-    }
-  </style>
 </head>
 <body>
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
     <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
-
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
     <!-- Future Feature Placeholders -->
     <div class="feature-placeholder" title="Feature 1">⚡</div>
     <div class="feature-placeholder" title="Feature 2">💎</div>
     <div class="feature-placeholder" title="Feature 3">🔥</div>
-
     <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
     <h1>Support the Portal</h1>
-    <p>Your support helps keep the official portal running and allows us to continue creating new content, experiments, and features.</p>
+    <p>Thank you for considering donating! Your support helps maintain and expand this portal, keeping the content fresh and interactive.</p>
 
-    <div id="donation-section">
-      <p>Click the button below to donate via Cash App:</p>
-      <button class="button" onclick="window.open('https://cash.app/$YourCashtag', '_blank')">
-        Donate Now
+    <!-- Donation Button -->
+    <div id="donationSection">
+      <button id="donateButton" class="button"
+        onclick="window.open('https://cash.app/$YourCashtag', '_blank')">
+        Donate via Cash App
       </button>
     </div>
 
-    <br>
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
@@ -92,7 +43,6 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
