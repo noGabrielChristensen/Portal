@@ -9,32 +9,23 @@
 <body>
   <!-- Sidebar -->
   <div id="sidebar" class="collapsed">
-    <!-- Main Portal Icon -->
-    <div class="sidebar-icon" data-link="index.html" title="Enter Portal">
-      🌀
-    </div>
-    <!-- Twitch Icon -->
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">
-      🎮
-    </div>
+    <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
+    <div class="sidebar-icon" data-link="music.html" title="Music">🎵</div>
     <!-- Future Feature Placeholders -->
-    <div class="feature-placeholder" title="Future Feature 1">⚡</div>
-    <div class="feature-placeholder" title="Future Feature 2">💎</div>
-    <div class="feature-placeholder" title="Future Feature 3">🔥</div>
-    <!-- Collapse/Expand Control -->
-    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">
-      ⇆
-    </div>
+    <div class="feature-placeholder" title="Feature 1">⚡</div>
+    <div class="feature-placeholder" title="Feature 2">💎</div>
+    <div class="feature-placeholder" title="Feature 3">🔥</div>
+    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
   </div>
 
   <!-- Main Content -->
   <div id="main-content">
     <h1>Official Portal Website for _noGabrielChristensen</h1>
     <p>Come back often to see what's new!</p>
-    <a href="index.html" class="button">Enter Portal</a>
-    <a href="https://www.twitch.tv/xBleedvow?sr=a" target="_blank" class="button">
-      🎮 I'm Live on Twitch — Come Hang Out!
-    </a>
+
+    <!-- Main Portal Button -->
+    <a href="#" class="button">Enter Portal</a>
   </div>
 
   <!-- Sidebar Script -->
@@ -46,7 +37,7 @@
       sidebar.classList.toggle('collapsed');
     });
 
-    // Handle clicks for sidebar icons with data-link
+    // Handle sidebar icon clicks
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
