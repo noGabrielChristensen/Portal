@@ -7,47 +7,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Sidebar -->
-  <div id="sidebar" class="collapsed">
-    <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch">🎮</div>
-    <div class="sidebar-icon" data-link="music.html" title="Music">🎵</div>
-    <!-- Future Feature Placeholders -->
-    <div class="feature-placeholder" title="Feature 1">⚡</div>
-    <div class="feature-placeholder" title="Feature 2">💎</div>
-    <div class="feature-placeholder" title="Feature 3">🔥</div>
-    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
-  </div>
+  <h1>Official Portal Website for _noGabrielChristensen</h1>
+  <p>Come back often to see what's new!</p>
 
-  <!-- Main Content -->
-  <div id="main-content">
-    <h1>Official Portal Website for _noGabrielChristensen</h1>
-    <p>Come back often to see what's new!</p>
+  <!-- Main Portal Button -->
+  <a href="#" class="button">Enter Portal</a>
 
-    <!-- Main Portal Button -->
-    <a href="#" class="button">Enter Portal</a>
-  </div>
+  <!-- Twitch Button -->
+  <a href="https://www.twitch.tv/xBleedvow?sr=a" target="_blank" class="button">
+    🎮 I'm Live on Twitch — Come Hang Out!
+  </a>
 
-  <!-- Sidebar Script -->
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggleSidebar');
-
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
-
-    // Handle sidebar icon clicks
-    document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
-      icon.addEventListener('click', () => {
-        const link = icon.dataset.link;
-        if(link.startsWith('http')) {
-          window.open(link, '_blank');
-        } else {
-          window.location.href = link;
-        }
-      });
-    });
-  </script>
+  <!-- Admin Panel Button -->
+  <a href="admin.html" class="button">Admin Panel</a>
 </body>
 </html>
