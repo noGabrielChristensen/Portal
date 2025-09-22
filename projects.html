@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Official Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div id="sidebar" class="collapsed">
+    <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
+    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
+    <!-- Future Feature Placeholders -->
+    <div class="feature-placeholder" title="Feature 1">⚡</div>
+    <div class="feature-placeholder" title="Feature 2">💎</div>
+    <div class="feature-placeholder" title="Feature 3">🔥</div>
+    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1>Projects</h1>
+    <p>This page highlights creative endeavors, experiments, and portfolio items. Content will be curated and expanded as work progresses, showcasing your vision and innovation.</p>
+
+    <ul>
+      <li>Project Alpha — Experimental portal feature</li>
+      <li>Project Beta — Interactive media integration</li>
+      <li>Project Gamma — Grove-inspired visualizations</li>
+    </ul>
+
+    <a href="index.html" class="button">Back to Home</a>
+  </div>
+
+  <!-- Sidebar Script -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Handle sidebar icon clicks
+    document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const link = icon.dataset.link;
+        if(link.startsWith('http')) {
+          window.open(link, '_blank');
+        } else {
+          window.location.href = link;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
