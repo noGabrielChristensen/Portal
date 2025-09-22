@@ -6,131 +6,151 @@
   <title>Admin Panel — Official Portal</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    #player-container {
-      margin-top: 20px;
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #FFA500;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
       text-align: center;
     }
 
-    #audio {
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 15px;
+    h1, h2 { margin-bottom: 20px; }
+    
+    .button {
+      background-color: #FFA500;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background 0.3s, transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button:hover { background-color: #ff7b00; transform: scale(1.05); }
+
+    #player {
+      margin-bottom: 20px;
+      position: relative;
+      width: 90%;
+      max-width: 700px;
     }
 
-    #fileInput {
-      margin-bottom: 10px;
-    }
+    #playlist { margin-top: 10px; text-align: left; }
 
-    #playlist {
-      margin-top: 10px;
+    #customization {
+      margin: 30px 0;
       text-align: left;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #customization, #donationSection, #progressSection {
-      margin-top: 30px;
-      padding: 20px;
+      width: 90%;
+      max-width: 700px;
+      padding: 15px;
       border: 1px solid #222;
       border-radius: 8px;
+    }
+    #customization label { display: block; margin-bottom: 10px; }
+
+    #donationSection {
+      margin-top: 30px;
+      width: 90%;
       max-width: 700px;
-      text-align: left;
+      padding: 15px;
+      border: 1px solid #222;
+      border-radius: 8px;
     }
 
-    #customization label {
-      display: block;
-      margin-bottom: 10px;
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 700px;
+      height: 400px;
+      background-color: #111;
+      border-radius: 8px;
+    }
+
+    input, select, textarea {
+      margin: 8px 0;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background-color: #222;
+      color: #fff;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div id="sidebar" class="collapsed">
-    <div class="sidebar-icon" data-link="index.html" title="Home">🏠</div>
-    <div class="sidebar-icon" data-link="https://www.twitch.tv/xBleedvow?sr=a" title="Twitch" onclick="window.open(this.dataset.link, '_blank')">🎮</div>
-    <!-- Future Feature Placeholders -->
-    <div class="feature-placeholder" title="Feature 1">⚡</div>
-    <div class="feature-placeholder" title="Feature 2">💎</div>
-    <div class="feature-placeholder" title="Feature 3">🔥</div>
-    <div class="sidebar-icon" id="toggleSidebar" title="Expand/Collapse Sidebar">⇆</div>
+
+  <h1>Admin Panel</h1>
+
+  <!-- Music Player -->
+  <div id="player">
+    <audio id="audio" controls></audio>
+    <input type="file" id="fileInput" accept="audio/*" multiple>
+    <div id="playlist"></div>
   </div>
 
-  <!-- Main Content -->
-  <div id="main-content">
-    <h1>Admin Panel</h1>
+  <!-- Visualizer -->
+  <canvas id="visualizer"></canvas>
 
-    <!-- Music Player -->
-    <div id="player-container">
-      <audio id="audio" controls></audio>
-      <input type="file" id="fileInput" accept="audio/*" multiple>
-      <div id="playlist"></div>
-    </div>
-
-    <!-- Customization Panel -->
-    <div id="customization">
-      <h2>Customization</h2>
-      <label>
-        Background Color:
-        <input type="color" id="bgColor" value="#000000">
-      </label>
-      <label>
-        Bar Width:
-        <input type="range" id="barWidth" min="1" max="10" value="4">
-      </label>
-      <label>
-        Sensitivity:
-        <input type="range" id="sensitivity" min="10" max="256" value="64">
-      </label>
-    </div>
-
-    <!-- Donation Section -->
-    <div id="donationSection">
-      <h2>Donation Settings</h2>
-      <p>Click below to donate via Cash App.</p>
-      <button id="donateButton" class="button"
-              onclick="window.open('https://cash.app/$YourCashtag', '_blank')">
-        Donate Now
-      </button>
-    </div>
-
-    <!-- What's in Progress -->
-    <div id="progressSection">
-      <h2>What’s in Progress</h2>
-      <ul>
-        <li>Donation button integration with Cash App prepared.</li>
-        <li>Message box for submitting requests coming soon.</li>
-      </ul>
-    </div>
-
-    <a href="index.html" class="button">Back to Home</a>
+  <!-- Customization Panel -->
+  <div id="customization">
+    <h2>Customization</h2>
+    <label>
+      Background Color:
+      <input type="color" id="bgColor" value="#111111">
+    </label>
+    <label>
+      Bar Width:
+      <input type="range" id="barWidth" min="1" max="10" value="4">
+    </label>
+    <label>
+      Sensitivity:
+      <input type="range" id="sensitivity" min="10" max="256" value="64">
+    </label>
   </div>
 
-  <!-- Sidebar Script -->
+  <!-- Donation Section -->
+  <div id="donationSection">
+    <h2>Donation Settings</h2>
+    <p>Click below to donate via Cash App.</p>
+    <button id="donateButton" class="button"
+            onclick="window.open('https://cash.app/$YourCashtag', '_blank')">
+      Donate Now
+    </button>
+  </div>
+
+  <a href="index.html" class="button">Back to Home</a>
+
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggleSidebar');
-
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
-
-    // Handle sidebar icon clicks
-    document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
-      icon.addEventListener('click', () => {
-        const link = icon.dataset.link;
-        if(link.startsWith('http')) {
-          window.open(link, '_blank');
-        } else {
-          window.location.href = link;
-        }
-      });
-    });
-
-    // Audio Player Logic
     const audio = document.getElementById("audio");
     const fileInput = document.getElementById("fileInput");
     const playlist = document.getElementById("playlist");
+    const canvas = document.getElementById("visualizer");
+    const ctx = canvas.getContext("2d");
+
+    let audioCtx, analyser, source, dataArray;
+    const smoothedValues = [];
+    let beatLevel = 0;
+    let rotationAngle = 0;
+    let hueOffset = 0;
+    const sparkles = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = 400;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     fileInput.addEventListener("change", () => {
       playlist.innerHTML = "";
@@ -140,7 +160,7 @@
         item.classList.add("playlist-item");
         item.onclick = () => loadTrack(file);
         playlist.appendChild(item);
-        if(index === 0) loadTrack(file);
+        if (index === 0) loadTrack(file);
       });
     });
 
@@ -148,7 +168,90 @@
       const url = URL.createObjectURL(file);
       audio.src = url;
       audio.play();
+
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        analyser.fftSize = 512;
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        for (let i = 0; i < analyser.frequencyBinCount; i++) smoothedValues[i] = 0;
+      }
     }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      if (!analyser) return;
+
+      analyser.getByteFrequencyData(dataArray);
+
+      const bgColor = document.getElementById("bgColor").value;
+      const barWidthInput = document.getElementById("barWidth").value;
+      const sensitivityInput = document.getElementById("sensitivity").value;
+
+      ctx.fillStyle = bgColor + 'DD';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const widthScale = canvas.width / 700;
+      const heightScale = canvas.height / 400;
+
+      for (let i = 0; i < dataArray.length; i++) {
+        smoothedValues[i] += (dataArray[i] - smoothedValues[i]) * 0.1;
+      }
+
+      let bassSum = 0;
+      const bassCount = Math.floor(dataArray.length / 10);
+      for (let i = 0; i < bassCount; i++) bassSum += smoothedValues[i];
+      beatLevel = bassSum / bassCount / 255;
+
+      rotationAngle += 0.01 + beatLevel * 0.05;
+      hueOffset += 1 + beatLevel * 3;
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const baseRadius = (80 + beatLevel * 100) * heightScale;
+      const totalBars = 60;
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(rotationAngle);
+
+      for (let i = 0; i < totalBars; i++) {
+        const bassIndex = Math.floor(i * 2);
+        const hiHatIndex = dataArray.length - totalBars + i;
+        const value = (smoothedValues[bassIndex] + smoothedValues[hiHatIndex]) / 2;
+        const barLength = value * (sensitivityInput / 64) * heightScale;
+        const angle = (i / totalBars) * 2 * Math.PI;
+        const hue = (hueOffset + value) % 360;
+
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        ctx.shadowBlur = 15 * heightScale + beatLevel * 30;
+        ctx.shadowColor = ctx.fillStyle;
+
+        ctx.rotate(angle);
+        ctx.fillRect(baseRadius, -barWidthInput/2 * heightScale, barLength, barWidthInput * heightScale);
+        ctx.rotate(-angle);
+      }
+      ctx.restore();
+
+      const highHatSum = dataArray.slice(-60).reduce((a,b) => a+b,0) / 60 / 255;
+      const sparkleCount = 40;
+      for (let i = 0; i < sparkleCount; i++) {
+        if (!sparkles[i]) sparkles[i] = { alpha: 0, angle: (i / sparkleCount) * 2*Math.PI };
+        sparkles[i].alpha += (Math.random() * 0.05 + highHatSum*0.2 - sparkles[i].alpha) * 0.1;
+        const radius = baseRadius + 120 * heightScale + Math.sin(Date.now()/200 + i) * 10 * heightScale + highHatSum * 50 * heightScale;
+        const hue = (hueOffset + i*5) % 360;
+        ctx.fillStyle = `hsla(${hue}, 100%, 70%, ${sparkles[i].alpha})`;
+        ctx.beginPath();
+        ctx.arc(centerX + radius * Math.cos(sparkles[i].angle), centerY + radius * Math.sin(sparkles[i].angle), 3 * heightScale, 0, 2*Math.PI);
+        ctx.fill();
+      }
+    }
+
+    draw();
   </script>
+
 </body>
 </html>
