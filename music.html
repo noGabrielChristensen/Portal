@@ -8,28 +8,22 @@
   <style>
     #player {
       margin-top: 20px;
-      width: 90%;
-      max-width: 700px;
       text-align: center;
     }
-    audio {
+    #audio {
       width: 100%;
+      max-width: 400px;
+    }
+    #visualizer {
+      width: 100%;
+      max-width: 700px;
+      height: 150px;
+      margin-top: 20px;
+      background-color: #000;
+      border-radius: 8px;
+    }
+    #fileInput {
       margin-top: 10px;
-      margin-bottom: 20px;
-    }
-    #playlist {
-      text-align: left;
-      margin-top: 10px;
-    }
-    #playlist div {
-      cursor: pointer;
-      padding: 5px;
-      border-bottom: 1px solid #222;
-      transition: background 0.2s;
-    }
-    #playlist div:hover {
-      background-color: #222;
-      color: #ff7b00;
     }
   </style>
 </head>
@@ -47,8 +41,8 @@
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1>Music Portal</h1>
-    <p>Listen to uploaded tracks and manage your music playlist below. Upload new audio files to play immediately.</p>
+    <h1>Music Player</h1>
+    <p>Upload your audio files to listen and see the visualization.</p>
 
     <div id="player">
       <audio id="audio" controls></audio>
@@ -56,42 +50,58 @@
       <div id="playlist"></div>
     </div>
 
+    <canvas id="visualizer"></canvas>
+
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
-  <!-- Sidebar Script -->
+  <!-- Sidebar & Music Script -->
   <script>
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggleSidebar');
+    const audio = document.getElementById('audio');
+    const fileInput = document.getElementById('fileInput');
+    const playlist = document.getElementById('playlist');
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
 
+    let audioCtx, analyser, source, dataArray;
+    const smoothedValues = [];
+    let beatLevel = 0;
+    let rotationAngle = 0;
+    let hueOffset = 0;
+    const sparkles = [];
+
+    // Resize canvas
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * 0.9;
+      canvas.height = 150;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Sidebar toggle
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('collapsed');
     });
-
     document.querySelectorAll('.sidebar-icon[data-link]').forEach(icon => {
       icon.addEventListener('click', () => {
         const link = icon.dataset.link;
-        if(link.startsWith('http')) {
-          window.open(link, '_blank');
-        } else {
-          window.location.href = link;
-        }
+        if(link.startsWith('http')) window.open(link, '_blank');
+        else window.location.href = link;
       });
     });
 
-    // Music Player Script
-    const audio = document.getElementById("audio");
-    const fileInput = document.getElementById("fileInput");
-    const playlist = document.getElementById("playlist");
-
+    // Load audio files
     fileInput.addEventListener("change", () => {
       playlist.innerHTML = "";
       Array.from(fileInput.files).forEach((file, index) => {
         const item = document.createElement("div");
         item.textContent = file.name;
+        item.classList.add("playlist-item");
         item.onclick = () => loadTrack(file);
         playlist.appendChild(item);
-        if(index === 0) loadTrack(file);
+        if (index === 0) loadTrack(file);
       });
     });
 
@@ -99,7 +109,70 @@
       const url = URL.createObjectURL(file);
       audio.src = url;
       audio.play();
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        analyser.fftSize = 512;
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        for (let i = 0; i < analyser.frequencyBinCount; i++) smoothedValues[i] = 0;
+      }
     }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      if (!analyser) return;
+
+      analyser.getByteFrequencyData(dataArray);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const widthScale = canvas.width / 700;
+      const heightScale = canvas.height / 150;
+
+      for (let i = 0; i < dataArray.length; i++) {
+        smoothedValues[i] += (dataArray[i] - smoothedValues[i]) * 0.1;
+      }
+
+      let bassSum = 0;
+      const bassCount = Math.floor(dataArray.length / 10);
+      for (let i = 0; i < bassCount; i++) bassSum += smoothedValues[i];
+      beatLevel = bassSum / bassCount / 255;
+
+      rotationAngle += 0.01 + beatLevel * 0.05;
+      hueOffset += 1 + beatLevel * 3;
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const baseRadius = (80 + beatLevel * 100) * heightScale;
+      const totalBars = 60;
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(rotationAngle);
+
+      for (let i = 0; i < totalBars; i++) {
+        const bassIndex = Math.floor(i * 2);
+        const hiHatIndex = dataArray.length - totalBars + i;
+        const value = (smoothedValues[bassIndex] + smoothedValues[hiHatIndex]) / 2;
+        const barLength = value * heightScale * 2;
+        const angle = (i / totalBars) * 2 * Math.PI;
+        const hue = (hueOffset + value) % 360;
+
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = ctx.fillStyle;
+
+        ctx.rotate(angle);
+        ctx.fillRect(baseRadius, -2, barLength, 4);
+        ctx.rotate(-angle);
+      }
+      ctx.restore();
+    }
+
+    draw();
   </script>
 </body>
 </html>
