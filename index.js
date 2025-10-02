@@ -1,11 +1,14 @@
+// index.js
 const express = require("express");
-const { supabase } = require("./supabase");
+const { supabase } = require("./supabase.js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON
 app.use(express.json());
 
+// Test route – fetch all profiles from Supabase
 app.get("/", async (req, res) => {
   try {
     const { data, error } = await supabase.from("profiles").select("*");
@@ -16,6 +19,7 @@ app.get("/", async (req, res) => {
   }
 });
 
+// Route to insert a new profile via POST
 app.post("/add-profile", async (req, res) => {
   const { uuid, name } = req.body;
   try {
@@ -29,6 +33,24 @@ app.post("/add-profile", async (req, res) => {
   }
 });
 
+// NEW ROUTE – create first profile via GET (clickable from phone)
+app.get("/create-profile", async (req, res) => {
+  try {
+    const { data, error } = await supabase.from("profiles").insert([
+      {
+        uuid: "first-profile-001",
+        name: "Gabriel",
+        created_at: new Date().toISOString()
+      }
+    ]);
+    if (error) throw error;
+    res.send("✅ Profile created: " + JSON.stringify(data));
+  } catch (err) {
+    res.status(500).send("❌ Error: " + err.message);
+  }
+});
+
+// Start the server
 app.listen(PORT, () =>
   console.log(`🔥 Mega App running at http://localhost:${PORT}`)
 );
