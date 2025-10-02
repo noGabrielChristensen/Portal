@@ -1,14 +1,11 @@
-// index.js
-import express from "express";
-import { supabase } from "./supabase.js";
+const express = require("express");
+const { supabase } = require("./supabase");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON (if you plan to insert data later)
 app.use(express.json());
 
-// Test route – fetch all profiles from Supabase
 app.get("/", async (req, res) => {
   try {
     const { data, error } = await supabase.from("profiles").select("*");
@@ -19,9 +16,8 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Example route to insert a new profile
 app.post("/add-profile", async (req, res) => {
-  const { uuid, name } = req.body; // send JSON { uuid, name } in POST request
+  const { uuid, name } = req.body;
   try {
     const { data, error } = await supabase
       .from("profiles")
@@ -33,7 +29,6 @@ app.post("/add-profile", async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(PORT, () =>
   console.log(`🔥 Mega App running at http://localhost:${PORT}`)
 );
