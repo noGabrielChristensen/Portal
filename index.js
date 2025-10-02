@@ -19,13 +19,13 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Route to insert a new profile via POST
+// Route to insert a new profile via POST (optional)
 app.post("/add-profile", async (req, res) => {
-  const { uuid, name } = req.body;
+  const { uuid } = req.body; // Only uuid needed for now
   try {
     const { data, error } = await supabase
       .from("profiles")
-      .insert([{ uuid, name, created_at: new Date() }]);
+      .insert([{ uuid, created_at: new Date() }]);
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -33,14 +33,12 @@ app.post("/add-profile", async (req, res) => {
   }
 });
 
-// NEW ROUTE – create first profile via GET (clickable from phone)
+// NEW ROUTE – create first profile via GET using only uuid
 app.get("/create-profile", async (req, res) => {
   try {
     const { data, error } = await supabase.from("profiles").insert([
       {
-        uuid: "first-profile-001",
-        name: "Gabriel",
-        created_at: new Date().toISOString()
+        uuid: "first-profile-001"
       }
     ]);
     if (error) throw error;
