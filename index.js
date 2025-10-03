@@ -1,14 +1,16 @@
 // index.js
 const express = require("express");
+const cors = require("cors");
 const { supabase } = require("./supabase.js");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
+// Add CORS middleware
+app.use(cors());
 app.use(express.json());
 
-// Test route – fetch all profiles from Supabase
+// Test route – fetch all profiles
 app.get("/", async (req, res) => {
   try {
     const { data, error } = await supabase.from("profiles").select("*");
@@ -19,10 +21,13 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Route to insert a new profile via POST (optional)
+// Example route – insert profile
 app.post("/add-profile", async (req, res) => {
+  const { id } = req.body; // send JSON { id } in POST request
   try {
-    const { data, error } = await supabase.from("profiles").insert([{}]);
+    const { data, error } = await supabase
+      .from("profiles")
+      .insert([{ id, created_at: new Date() }]);
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -30,18 +35,6 @@ app.post("/add-profile", async (req, res) => {
   }
 });
 
-// NEW ROUTE – create first profile via GET (works with empty table)
-app.get("/create-profile", async (req, res) => {
-  try {
-    const { data, error } = await supabase.from("profiles").insert([{}]);
-    if (error) throw error;
-    res.send("✅ Profile created: " + JSON.stringify(data));
-  } catch (err) {
-    res.status(500).send("❌ Error: " + err.message);
-  }
+app.listen(PORT, () => {
+  console.log(`🔥 Mega App running at http://localhost:${PORT}`);
 });
-
-// Start the server
-app.listen(PORT, () =>
-  console.log(`🔥 Mega App running at http://localhost:${PORT}`)
-);
