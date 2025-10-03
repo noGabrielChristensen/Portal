@@ -1,4 +1,3 @@
-// index.js
 const express = require("express");
 const cors = require("cors");
 const { supabase } = require("./supabase.js");
@@ -6,11 +5,13 @@ const { supabase } = require("./supabase.js");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Add CORS middleware
+// Enable CORS for all origins
 app.use(cors());
+
+// Middleware to parse JSON
 app.use(express.json());
 
-// Test route – fetch all profiles
+// GET all profiles
 app.get("/", async (req, res) => {
   try {
     const { data, error } = await supabase.from("profiles").select("*");
@@ -21,7 +22,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Example route – insert profile
+// POST new profile
 app.post("/add-profile", async (req, res) => {
   const { id } = req.body; // send JSON { id } in POST request
   try {
@@ -35,6 +36,7 @@ app.post("/add-profile", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🔥 Mega App running at http://localhost:${PORT}`);
-});
+// Start server
+app.listen(PORT, () =>
+  console.log(`🔥 Mega App running at http://localhost:${PORT}`)
+);
