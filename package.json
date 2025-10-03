@@ -1,16 +1,13 @@
 {
   "name": "mega-app",
   "version": "1.0.0",
-  "description": "Father's Mega App connected to Supabase",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "engines": {
-    "node": "18.x"
-  },
   "dependencies": {
     "express": "^4.18.2",
-    "@supabase/supabase-js": "^2.33.0"
+    "@supabase/supabase-js": "^2.11.0",
+    "cors": "^2.8.5"
   }
 }
