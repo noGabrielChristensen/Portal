@@ -1,54 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mega App - Profiles</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mega App Profiles</title>
 </head>
 <body>
   <h1>Create a Profile</h1>
-  <form id="profileForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" required>
+  <form id="profile-form">
+    <input type="text" id="name" placeholder="Name" required />
     <button type="submit">Add Profile</button>
   </form>
 
   <h2>All Profiles</h2>
-  <ul id="profilesList"></ul>
+  <ul id="profiles-list"></ul>
 
   <script>
-    const form = document.getElementById('profileForm');
-    const profilesList = document.getElementById('profilesList');
-    const API_URL = "https://portal-e138.onrender.com";
+    const backendUrl = "https://portal-e138.onrender.com"; // Your Render URL
 
-    // Fetch and display all profiles
     async function fetchProfiles() {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      profilesList.innerHTML = '';
-      data.forEach(profile => {
-        const li = document.createElement('li');
-        li.textContent = `ID: ${profile.id} | Created: ${profile.created_at}`;
-        profilesList.appendChild(li);
+      const res = await fetch(`${backendUrl}/profiles`);
+      const profiles = await res.json();
+      const list = document.getElementById("profiles-list");
+      list.innerHTML = "";
+      profiles.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = `ID: ${p.id} | Created: ${new Date(p.created_at).toLocaleString()}`;
+        list.appendChild(li);
       });
     }
 
-    // Add a new profile
-    form.addEventListener('submit', async (e) => {
+    document.getElementById("profile-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-
-      await fetch(`${API_URL}/add-profile`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const name = document.getElementById("name").value;
+      await fetch(`${backendUrl}/add-profile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name })
       });
-
-      form.reset();
+      document.getElementById("name").value = "";
       fetchProfiles();
     });
 
-    // Initial load
+    // Load profiles on page load
     fetchProfiles();
   </script>
 </body>
